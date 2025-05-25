@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8" />
+  <title>Список покупок</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
+  <style>
+    body {
+      font-family: sans-serif;
+      padding: 1em;
+      background: #f9f9f9;
+      color: #333;
+    }
+    h2 {
+      text-align: center;
+    }
+    ul {
+      list-style: none;
+      padding: 0;
+    }
+    li {
+      background: white;
+      padding: 0.5em;
+      margin-bottom: 0.5em;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-radius: 6px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+    }
+    input, button {
+      font-size: 1em;
+      padding: 0.5em;
+    }
+    #controls {
+      display: flex;
+      gap: 0.5em;
+      margin-bottom: 1em;
+    }
+    input {
+      flex: 1;
+    }
+  </style>
+</head>
+<body>
+  <h2>🛒 Список покупок</h2>
+  <div id="controls">
+    <input type="text" id="itemInput" placeholder="Добавить товар" />
+    <button onclick="addItem()">➕</button>
+  </div>
+  <ul id="list"></ul>
+
+  <script>
+    const tg = window.Telegram.WebApp;
+    tg.expand();
+
+    const input = document.getElementById('itemInput');
+    const list = document.getElementById('list');
+
+    function addItem() {
+      const value = input.value.trim();
+      if (!value) return;
+
+      const li = document.createElement('li');
+      const text = document.createElement('span');
+      text.textContent = value;
+
+      const delBtn = document.createElement('button');
+      delBtn.textContent = '✖';
+      delBtn.onclick = () => li.remove();
+
+      li.appendChild(text);
+      li.appendChild(delBtn);
+      list.appendChild(li);
+      input.value = '';
+    }
+  </script>
+</body>
+</html>
